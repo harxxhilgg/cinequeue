@@ -1,0 +1,301 @@
+[
+  {
+    "id": "schema.public",
+    "label": "Create schema \"public\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres"
+    },
+    "precheck": [],
+    "execute": [
+      {
+        "description": "Create schema \"public\"",
+        "sql": "CREATE SCHEMA IF NOT EXISTS \"public\"",
+        "params": []
+      }
+    ],
+    "postcheck": []
+  },
+  {
+    "id": "table.Media",
+    "label": "Create table \"Media\"",
+    "summary": "Creates table \"Media\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "Media"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"Media\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"Media\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"Media\"",
+        "sql": "CREATE TABLE \"public\".\"Media\" (\n  \"createdAt\" timestamptz DEFAULT (now()) NOT NULL,\n  \"externalId\" text NOT NULL,\n  \"id\" SERIAL NOT NULL,\n  \"mediaType\" text NOT NULL,\n  \"posterUrl\" text,\n  \"source\" text NOT NULL,\n  \"title\" text NOT NULL,\n  \"updatedAt\" timestamptz NOT NULL,\n  PRIMARY KEY (\"id\"),\n  CONSTRAINT \"Media_mediaType_check_281b15cc\" CHECK (\"mediaType\" IN ('MOVIE', 'TV')),\n  CONSTRAINT \"Media_source_check_1eb2cc39\" CHECK (\"source\" IN ('TMDB'))\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"Media\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"Media\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "table.UserMedia",
+    "label": "Create table \"UserMedia\"",
+    "summary": "Creates table \"UserMedia\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "table",
+        "name": "UserMedia"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure table \"UserMedia\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"UserMedia\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create table \"UserMedia\"",
+        "sql": "CREATE TABLE \"public\".\"UserMedia\" (\n  \"createdAt\" timestamptz DEFAULT (now()) NOT NULL,\n  \"id\" SERIAL NOT NULL,\n  \"mediaId\" int4 NOT NULL,\n  \"position\" int4 DEFAULT 0 NOT NULL,\n  \"status\" text NOT NULL,\n  \"updatedAt\" timestamptz NOT NULL,\n  \"userId\" text NOT NULL,\n  PRIMARY KEY (\"id\"),\n  CONSTRAINT \"UserMedia_status_check_3044635d\" CHECK (\"status\" IN ('WATCHLIST', 'WATCHING', 'UPCOMING', 'WATCHED'))\n)",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify table \"UserMedia\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"UserMedia\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "unique.Media.Media_source_externalId_key",
+    "label": "Add unique constraint on \"Media\" (source, externalId)",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "unique",
+        "name": "Media_source_externalId_key",
+        "table": "Media"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure constraint \"Media_source_externalId_key\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "Media_source_externalId_key",
+          "public",
+          "\"public\".\"Media\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add unique constraint \"Media_source_externalId_key\"",
+        "sql": "ALTER TABLE \"public\".\"Media\" ADD CONSTRAINT \"Media_source_externalId_key\" UNIQUE (\"source\", \"externalId\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify constraint \"Media_source_externalId_key\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "Media_source_externalId_key",
+          "public",
+          "\"public\".\"Media\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "unique.UserMedia.UserMedia_userId_mediaId_key",
+    "label": "Add unique constraint on \"UserMedia\" (userId, mediaId)",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "unique",
+        "name": "UserMedia_userId_mediaId_key",
+        "table": "UserMedia"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure constraint \"UserMedia_userId_mediaId_key\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "UserMedia_userId_mediaId_key",
+          "public",
+          "\"public\".\"UserMedia\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add unique constraint \"UserMedia_userId_mediaId_key\"",
+        "sql": "ALTER TABLE \"public\".\"UserMedia\" ADD CONSTRAINT \"UserMedia_userId_mediaId_key\" UNIQUE (\"userId\", \"mediaId\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify constraint \"UserMedia_userId_mediaId_key\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "UserMedia_userId_mediaId_key",
+          "public",
+          "\"public\".\"UserMedia\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.UserMedia.UserMedia_mediaId_idx_6b06655c",
+    "label": "Create index \"UserMedia_mediaId_idx_6b06655c\" on \"UserMedia\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "UserMedia_mediaId_idx_6b06655c",
+        "table": "UserMedia"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"UserMedia_mediaId_idx_6b06655c\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"UserMedia_mediaId_idx_6b06655c\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"UserMedia_mediaId_idx_6b06655c\"",
+        "sql": "CREATE INDEX \"UserMedia_mediaId_idx_6b06655c\" ON \"public\".\"UserMedia\" (\"mediaId\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"UserMedia_mediaId_idx_6b06655c\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"UserMedia_mediaId_idx_6b06655c\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "index.UserMedia.UserMedia_userId_status_idx_e4a128ba",
+    "label": "Create index \"UserMedia_userId_status_idx_e4a128ba\" on \"UserMedia\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "index",
+        "name": "UserMedia_userId_status_idx_e4a128ba",
+        "table": "UserMedia"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure index \"UserMedia_userId_status_idx_e4a128ba\" does not exist",
+        "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
+        "params": [
+          "\"public\".\"UserMedia_userId_status_idx_e4a128ba\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "create index \"UserMedia_userId_status_idx_e4a128ba\"",
+        "sql": "CREATE INDEX \"UserMedia_userId_status_idx_e4a128ba\" ON \"public\".\"UserMedia\" (\"userId\", \"status\")",
+        "params": []
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify index \"UserMedia_userId_status_idx_e4a128ba\" exists",
+        "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
+        "params": [
+          "\"public\".\"UserMedia_userId_status_idx_e4a128ba\""
+        ]
+      }
+    ]
+  },
+  {
+    "id": "foreignKey.UserMedia.UserMedia_mediaId_fkey",
+    "label": "Add foreign key \"UserMedia_mediaId_fkey\" on \"UserMedia\"",
+    "operationClass": "additive",
+    "target": {
+      "id": "postgres",
+      "details": {
+        "schema": "public",
+        "objectType": "foreignKey",
+        "name": "UserMedia_mediaId_fkey",
+        "table": "UserMedia"
+      }
+    },
+    "precheck": [
+      {
+        "description": "ensure FK \"UserMedia_mediaId_fkey\" does not exist",
+        "sql": "SELECT NOT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "UserMedia_mediaId_fkey",
+          "public",
+          "\"public\".\"UserMedia\""
+        ]
+      }
+    ],
+    "execute": [
+      {
+        "description": "add FK \"UserMedia_mediaId_fkey\"",
+        "sql": "ALTER TABLE \"public\".\"UserMedia\"\nADD CONSTRAINT \"UserMedia_mediaId_fkey\"\nFOREIGN KEY (\"mediaId\")\nREFERENCES \"public\".\"Media\" (\"id\")"
+      }
+    ],
+    "postcheck": [
+      {
+        "description": "verify FK \"UserMedia_mediaId_fkey\" exists",
+        "sql": "SELECT EXISTS (SELECT 1 AS \"one\" FROM \"pg_constraint\" AS \"c\" INNER JOIN \"pg_namespace\" AS \"n\" ON \"n\".\"oid\" = \"c\".\"connamespace\" WHERE (\"c\".\"conname\" = $1 AND \"n\".\"nspname\" = $2 AND \"c\".\"conrelid\" = to_regclass($3))) AS \"result\"",
+        "params": [
+          "UserMedia_mediaId_fkey",
+          "public",
+          "\"public\".\"UserMedia\""
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,44 @@
+// use prisma-8
+enum MediaSource {
+  TMDB
+}
+
+enum MediaType {
+  MOVIE
+  TV
+}
+
+enum MediaStatus {
+  WATCHLIST
+  WATCHING
+  UPCOMING
+  WATCHED
+}
+
+model Media {
+  id         Int                        @id @default(autoincrement())
+  source     MediaSource
+  externalId String
+  title      String
+  posterUrl  String?
+  mediaType  MediaType
+  userMedia  UserMedia[]
+  createdAt  TimestamptzString          @default(now())
+  updatedAt  temporal.updatedAtString()
+
+  @@unique([source, externalId])
+}
+
+model UserMedia {
+  id        Int                        @id @default(autoincrement())
+  userId    String
+  media     Media                      @relation(fields:[mediaId], references:[id])
+  mediaId   Int
+  status    MediaStatus
+  position  Int                        @default(0)
+  createdAt TimestamptzString          @default(now())
+  updatedAt temporal.updatedAtString()
+
+  @@unique([userId, mediaId])
+  @@index([userId, status])
+}
