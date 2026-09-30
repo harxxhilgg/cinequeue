@@ -11,36 +11,11 @@ import { Spinner } from "../ui/spinner";
 export function GoogleLoginBtn() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const handleGoogleLogin1 = async () => {
-    if (isLoading) return;
-
-    setIsLoading(true);
-
-    const supabase = createClient();
-
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
-      },
-    });
-
-    if (error) {
-      setIsLoading(false);
-
-      toast.add({
-        type: "error",
-        title: "Login failed",
-        description: error.message,
-      });
-    };
-  };
-
   const handleGoogleLogin = async () => {
     if (isLoading) return;
 
     setIsLoading(true);
-    await delay(5000);
+    await delay(1500); //! REMOVE LATER
 
     try {
       const supabase = createClient();
@@ -77,13 +52,14 @@ export function GoogleLoginBtn() {
       variant="default"
       disabled={isLoading}
       onClick={handleGoogleLogin}
+      className="w-50 space-x-1"
     >
       {isLoading ? (
         <Spinner />
       ) : (
         <>
           <GoogleLogoIcon />
-          <p>Continue with Google</p>
+          <p>Sign in with Google</p>
         </>
       )}
     </Button>
