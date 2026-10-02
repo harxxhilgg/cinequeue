@@ -137,12 +137,8 @@
               "userMedia": {
                 "cardinality": "1:N",
                 "on": {
-                  "localFields": [
-                    "id"
-                  ],
-                  "targetFields": [
-                    "mediaId"
-                  ]
+                  "localFields": ["id"],
+                  "targetFields": ["mediaId"]
                 },
                 "to": {
                   "model": "UserMedia",
@@ -244,12 +240,8 @@
                 "cardinality": "N:1",
                 "nullable": false,
                 "on": {
-                  "localFields": [
-                    "mediaId"
-                  ],
-                  "targetFields": [
-                    "id"
-                  ]
+                  "localFields": ["mediaId"],
+                  "targetFields": ["id"]
                 },
                 "to": {
                   "model": "Media",
@@ -372,16 +364,11 @@
               "foreignKeys": [],
               "indexes": [],
               "primaryKey": {
-                "columns": [
-                  "id"
-                ]
+                "columns": ["id"]
               },
               "uniques": [
                 {
-                  "columns": [
-                    "source",
-                    "externalId"
-                  ]
+                  "columns": ["source", "externalId"]
                 }
               ]
             },
@@ -451,16 +438,12 @@
               "foreignKeys": [
                 {
                   "source": {
-                    "columns": [
-                      "mediaId"
-                    ],
+                    "columns": ["mediaId"],
                     "namespaceId": "public",
                     "tableName": "UserMedia"
                   },
                   "target": {
-                    "columns": [
-                      "id"
-                    ],
+                    "columns": ["id"],
                     "namespaceId": "public",
                     "tableName": "Media"
                   }
@@ -468,34 +451,24 @@
               ],
               "indexes": [
                 {
-                  "columns": [
-                    "mediaId"
-                  ],
+                  "columns": ["mediaId"],
                   "name": "UserMedia_mediaId_idx_6b06655c",
                   "prefix": "UserMedia_mediaId_idx",
                   "unique": false
                 },
                 {
-                  "columns": [
-                    "userId",
-                    "status"
-                  ],
+                  "columns": ["userId", "status"],
                   "name": "UserMedia_userId_status_idx_e4a128ba",
                   "prefix": "UserMedia_userId_status_idx",
                   "unique": false
                 }
               ],
               "primaryKey": {
-                "columns": [
-                  "id"
-                ]
+                "columns": ["id"]
               },
               "uniques": [
                 {
-                  "columns": [
-                    "userId",
-                    "mediaId"
-                  ]
+                  "columns": ["userId", "mediaId"]
                 }
               ]
             }
@@ -503,25 +476,15 @@
           "valueSet": {
             "MediaSource": {
               "kind": "valueSet",
-              "values": [
-                "TMDB"
-              ]
+              "values": ["TMDB"]
             },
             "MediaStatus": {
               "kind": "valueSet",
-              "values": [
-                "WATCHLIST",
-                "WATCHING",
-                "UPCOMING",
-                "WATCHED"
-              ]
+              "values": ["WATCHLIST", "WATCHING", "UPCOMING", "WATCHED"]
             },
             "MediaType": {
               "kind": "valueSet",
-              "values": [
-                "MOVIE",
-                "TV"
-              ]
+              "values": ["MOVIE", "TV"]
             }
           }
         },

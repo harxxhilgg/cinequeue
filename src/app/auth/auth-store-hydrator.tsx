@@ -7,9 +7,7 @@ type AuthStoreHydratorProps = {
   user: AppUser;
 };
 
-export function AuthStoreHydrator({
-  user,
-}: AuthStoreHydratorProps) {
+export function AuthStoreHydrator({ user }: AuthStoreHydratorProps) {
   const setUser = useAuthStore((state) => state.setUser);
 
   useEffect(() => {
@@ -17,4 +15,4 @@ export function AuthStoreHydrator({
   }, [user, setUser]);
 
   return null;
-};
+}

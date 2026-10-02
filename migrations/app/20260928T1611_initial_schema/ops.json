@@ -33,9 +33,7 @@
       {
         "description": "ensure table \"Media\" does not exist",
         "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
-        "params": [
-          "\"public\".\"Media\""
-        ]
+        "params": ["\"public\".\"Media\""]
       }
     ],
     "execute": [
@@ -49,9 +47,7 @@
       {
         "description": "verify table \"Media\" exists",
         "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
-        "params": [
-          "\"public\".\"Media\""
-        ]
+        "params": ["\"public\".\"Media\""]
       }
     ]
   },
@@ -72,9 +68,7 @@
       {
         "description": "ensure table \"UserMedia\" does not exist",
         "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
-        "params": [
-          "\"public\".\"UserMedia\""
-        ]
+        "params": ["\"public\".\"UserMedia\""]
       }
     ],
     "execute": [
@@ -88,9 +82,7 @@
       {
         "description": "verify table \"UserMedia\" exists",
         "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
-        "params": [
-          "\"public\".\"UserMedia\""
-        ]
+        "params": ["\"public\".\"UserMedia\""]
       }
     ]
   },
@@ -195,9 +187,7 @@
       {
         "description": "ensure index \"UserMedia_mediaId_idx_6b06655c\" does not exist",
         "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
-        "params": [
-          "\"public\".\"UserMedia_mediaId_idx_6b06655c\""
-        ]
+        "params": ["\"public\".\"UserMedia_mediaId_idx_6b06655c\""]
       }
     ],
     "execute": [
@@ -211,9 +201,7 @@
       {
         "description": "verify index \"UserMedia_mediaId_idx_6b06655c\" exists",
         "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
-        "params": [
-          "\"public\".\"UserMedia_mediaId_idx_6b06655c\""
-        ]
+        "params": ["\"public\".\"UserMedia_mediaId_idx_6b06655c\""]
       }
     ]
   },
@@ -234,9 +222,7 @@
       {
         "description": "ensure index \"UserMedia_userId_status_idx_e4a128ba\" does not exist",
         "sql": "SELECT (to_regclass($1)) IS NULL AS \"result\"",
-        "params": [
-          "\"public\".\"UserMedia_userId_status_idx_e4a128ba\""
-        ]
+        "params": ["\"public\".\"UserMedia_userId_status_idx_e4a128ba\""]
       }
     ],
     "execute": [
@@ -250,9 +236,7 @@
       {
         "description": "verify index \"UserMedia_userId_status_idx_e4a128ba\" exists",
         "sql": "SELECT (to_regclass($1)) IS NOT NULL AS \"result\"",
-        "params": [
-          "\"public\".\"UserMedia_userId_status_idx_e4a128ba\""
-        ]
+        "params": ["\"public\".\"UserMedia_userId_status_idx_e4a128ba\""]
       }
     ]
   },

@@ -9,6 +9,6 @@ export const useMediaStore = create<MediaStore>((set) => ({
   searchQuery: "",
 
   setSearchQuery: (query) => {
-    set({ searchQuery: query})
+    set({ searchQuery: query });
   },
 }));

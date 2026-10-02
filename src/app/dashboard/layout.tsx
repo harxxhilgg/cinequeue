@@ -6,8 +6,8 @@ import { LogoutBtn } from "@/components/auth/logout-btn";
 import { UserInfo } from "@/components/auth/user-info";
 
 export const metadata: Metadata = {
-  title: "Dashboard - CineQueue",
-  description: "CineQueue Dashboard",
+  title: "Dashboard - PlotQ",
+  description: "PlotQ Dashboard",
 };
 
 export default async function DashboardLayout({
@@ -30,7 +30,7 @@ export default async function DashboardLayout({
     email: user.email ?? "",
     name: user.user_metadata.full_name ?? null,
     avatarUrl: user.user_metadata.avatar_url ?? null,
-  }
+  };
 
   return (
     <>

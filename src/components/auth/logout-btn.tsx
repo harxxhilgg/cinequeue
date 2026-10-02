@@ -6,9 +6,20 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "../ui/toast";
 import { createClient } from "@/lib/supabase/client";
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "../ui/alert-dialog";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "../ui/alert-dialog";
 import { Button } from "../ui/button";
 import { Spinner } from "../ui/spinner";
+import { LogOutIcon } from "lucide-react";
 
 export function LogoutBtn() {
   const router = useRouter();
@@ -41,7 +52,8 @@ export function LogoutBtn() {
       router.replace("/");
       router.refresh();
     } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : "An unexpected error occured.";
+      const message =
+        err instanceof Error ? err.message : "An unexpected error occured.";
 
       toast.add({
         type: "error",
@@ -50,26 +62,28 @@ export function LogoutBtn() {
       });
     } finally {
       setIsLoading(false);
-    };
+    }
   };
 
   return (
     <AlertDialog>
-      <AlertDialogTrigger render={<Button variant="destructive" size="lg" className="h-10.25" />}>
+      <AlertDialogTrigger
+        render={<Button variant="destructive" size="lg" className="h-10.25" />}
+      >
+        <LogOutIcon className="size-4" />
         Logout
       </AlertDialogTrigger>
 
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Logout?</AlertDialogTitle>
-          <AlertDialogDescription>Are you sure you want to logout?</AlertDialogDescription>
+          <AlertDialogDescription>
+            Are you sure you want to logout?
+          </AlertDialogDescription>
         </AlertDialogHeader>
 
         <AlertDialogFooter className="flex-row gap-3">
-          <AlertDialogCancel
-            disabled={isLoading}
-            className="flex-1 m-0"
-          >
+          <AlertDialogCancel disabled={isLoading} className="flex-1 m-0">
             Cancel
           </AlertDialogCancel>
 
@@ -79,12 +93,10 @@ export function LogoutBtn() {
             variant="destructive"
             className="flex-1 m-0"
           >
-            {isLoading ? (
-              <Spinner />
-            ) : "Logout"}
+            {isLoading ? <Spinner /> : "Logout"}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
   );
-};
+}

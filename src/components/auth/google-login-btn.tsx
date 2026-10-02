@@ -34,7 +34,8 @@ export function GoogleLoginBtn() {
       // Note: If successful, signInWithOAuth redirects the window,
       // so code here may not execute before the browser navigates away.
     } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : "An unexpected error occured.";
+      const message =
+        err instanceof Error ? err.message : "An unexpected error occured.";
 
       toast.add({
         type: "error",
@@ -43,7 +44,7 @@ export function GoogleLoginBtn() {
       });
     } finally {
       setIsLoading(false);
-    };
+    }
   };
 
   return (
@@ -64,4 +65,4 @@ export function GoogleLoginBtn() {
       )}
     </Button>
   );
-};
+}

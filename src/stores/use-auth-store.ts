@@ -1,7 +1,7 @@
 import { create } from "zustand";
 
 export type AppUser = {
-  id: string; 
+  id: string;
   name: string;
   email: string;
   avatarUrl: string;
@@ -18,5 +18,5 @@ export const useAuthStore = create<AuthStore>((set) => ({
 
   setUser: (user) => set({ user }),
 
-  clearUser: ()  => set({ user: null }),
+  clearUser: () => set({ user: null }),
 }));

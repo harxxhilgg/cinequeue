@@ -1,4 +1,4 @@
-export { cn } from "cn"
+export { cn } from "cn";
 
 // Set custom delay
 export function delay(ms: number) {

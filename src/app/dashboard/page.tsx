@@ -1,15 +1,24 @@
-"use client";
-
-import { useAuthStore } from "@/stores/use-auth-store";
+import { MediaBoard } from "@/components/dashboard/media-board";
+import { MediaSearch } from "@/components/dashboard/media-search";
 
 export default function DashboardPage() {
-  const user = useAuthStore((state) => state.user);
-
   return (
-    <main className="min-h-screen p-6">
-      <h1>Dashboard</h1>
+    <main className="flex h-screen min-h-0 flex-col px-6 pb-6">
+      <div className="absolute left-6 top-6 z-50">
+        <h2 className="text-3xl font-monst font-normal">PlotQ</h2>
+      </div>
 
-      <p>Welcome, {user?.name}</p>
+      {/* Search */}
+      <div className="flex shrink-0 justify-center pt-30">
+        <div className="w-full max-w-175">
+          <MediaSearch />
+        </div>
+      </div>
+
+      {/* Cards */}
+      <div className="mt-10 min-h-0 flex-1">
+        <MediaBoard />
+      </div>
     </main>
   );
 }

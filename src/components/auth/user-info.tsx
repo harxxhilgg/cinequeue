@@ -7,7 +7,7 @@ export function UserInfo() {
   const user = useAuthStore((state) => state.user);
 
   return (
-    <div className="flex gap-2 bg-secondary py-2 px-3 rounded-lg">
+    <div className="flex gap-2 bg-secondary py-2 px-3 rounded-lg select-none">
       <Image
         src={user?.avatarUrl || "/default_user.png"}
         alt="User Image"
@@ -19,4 +19,4 @@ export function UserInfo() {
       <p>{user?.name}</p>
     </div>
   );
-};
+}
