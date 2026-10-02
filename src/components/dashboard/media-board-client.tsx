@@ -6,7 +6,7 @@ import {
   DragOverlay,
   DragStartEvent,
 } from "@dnd-kit/core";
-import { useId, useState } from "react";
+import { useId, useState, useEffect } from "react";
 import { MediaCard } from "./media-card";
 import { MediaColumn } from "./media-column";
 
@@ -55,6 +55,11 @@ export function MediaBoardClient({
   const [items, setItems] = useState(initialItems);
   const [activeItem, setActiveItem] =
     useState<UserMediaItem | null>(null);
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setItems(initialItems);
+  }, [initialItems]);
 
   function handleDragStart(event: DragStartEvent) {
     const item = items.find(
