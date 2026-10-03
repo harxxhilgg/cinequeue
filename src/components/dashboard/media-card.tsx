@@ -20,6 +20,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { getTmdbImageUrl } from "@/lib/tmdb/image";
 import { Spinner } from "../ui/spinner";
+import { delay } from "@/lib/utils";
 
 type UserMediaItem = {
   id: number;
@@ -79,15 +80,17 @@ export function MediaCard({
     if (!onDelete || isDeleting) return;
 
     setIsDeleting(true);
+    await delay(1000); // KEEP THIS DELAY
 
-    const deleted = await onDelete(item.id);
-
-    setIsDeleting(false);
-
-    if (deleted) {
+    try {
+      await onDelete(item.id); // returns boolean
+    } catch (error) {
+      console.error("Error deleting item: ", error);
+    } finally {
+      setIsDeleting(false);
       setIsDeleteDialogOpen(false);
-    }
-  }
+    };
+  };
 
   return (
     <>
@@ -182,8 +185,8 @@ export function MediaCard({
             </AlertDialogDescription>
           </AlertDialogHeader>
 
-          <AlertDialogFooter>
-            <AlertDialogCancel disabled={isDeleting}>
+          <AlertDialogFooter className="flex-row gap-3">
+            <AlertDialogCancel disabled={isDeleting} className="flex-1 m-0">
               Cancel
             </AlertDialogCancel>
 
@@ -191,6 +194,7 @@ export function MediaCard({
               onClick={handleDelete}
               disabled={isDeleting}
               variant="destructive"
+              className="flex-1 m-0"
             >
               {isDeleting ? (
                 <Spinner />

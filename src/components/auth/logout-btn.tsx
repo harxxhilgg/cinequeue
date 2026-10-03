@@ -30,7 +30,7 @@ export function LogoutBtn() {
     if (isLoading) return;
 
     setIsLoading(true);
-    await delay(1500); //! REMOVE LATER
+    await delay(1000); // KEEP THIS DELAY
 
     try {
       const supabase = createClient();
