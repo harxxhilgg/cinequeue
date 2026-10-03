@@ -69,3 +69,81 @@ export async function addToWatchList({
     mediaId: media.id,
   };
 }
+
+type PersistUserMediaInput = {
+  id: number;
+  status: "WATCHLIST" | "WATCHING" | "UPCOMING" | "WATCHED";
+  position: number;
+};
+
+export async function persistUserMediaPositions(
+  userId: string,
+  changes: PersistUserMediaInput[],
+) {
+  if (changes.length === 0) {
+    return;
+  }
+
+  // make sure every row being changed belongs to the authenticated user
+  const userMedia = await db.orm.public.UserMedia.where({ userId }).all();
+
+  const userMediaIds = new Set(userMedia.map((item) => item.id));
+
+  const containsAuthorizedIds = changes.some(
+    (change) => !userMediaIds.has(change.id),
+  );
+
+  if (containsAuthorizedIds) {
+    throw new Error("Invalid item name.");
+  }
+
+  await db.transaction(async (tx) => {
+    for (const change of changes) {
+      await tx.orm.public.UserMedia.where({
+        id: change.id,
+        userId,
+      }).update({
+        status: change.status,
+        position: change.position,
+      });
+    }
+  });
+}
+
+export async function deleteUserMedia(userId: string, userMediaId: number) {
+  return db.transaction(async (tx) => {
+    const deletedItem = await tx.orm.public.UserMedia.where({
+      id: userMediaId,
+      userId,
+    }).delete();
+
+    if (!deletedItem) {
+      return {
+        deleted: false,
+      };
+    }
+
+    // Re-number the remaining items in the same column
+    const remainingItems = await tx.orm.public.UserMedia.where({
+      userId,
+      status: deletedItem.status,
+    }).all();
+
+    remainingItems.sort((a, b) => a.position - b.position);
+
+    for (const [index, item] of remainingItems.entries()) {
+      if (item.position !== index) {
+        await tx.orm.public.UserMedia.where({
+          id: item.id,
+          userId,
+        }).update({
+          position: index,
+        });
+      }
+    }
+
+    return {
+      deleted: true,
+    };
+  });
+}

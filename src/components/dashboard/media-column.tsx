@@ -1,6 +1,7 @@
 "use client";
 
 import { useDroppable } from "@dnd-kit/core";
+import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { MediaCard } from "./media-card";
 
 
@@ -22,12 +23,14 @@ type MediaColumnProps = {
   id: UserMediaItem["status"];
   title: string;
   items: UserMediaItem[];
+  onDelete: (id: number) => Promise<boolean>;
 };
 
 export function MediaColumn({
   id,
   title,
   items,
+  onDelete
 }: MediaColumnProps) {
   const { setNodeRef, isOver } = useDroppable({
     id,
@@ -54,17 +57,22 @@ export function MediaColumn({
         ref={setNodeRef}
         className="flex-1 overflow-y-auto p-3"
       >
-        {items.length === 0 ? (
-          <div className="flex h-full items-center justify-center text-center text-sm text-muted-foreground">
-            Nothing here yet.
-          </div>
-        ) : (
-          <div className="space-y-2">
-            {items.map((item) => (
-              <MediaCard key={item.id} item={item} />
-            ))}
-          </div>
-        )}
+        <SortableContext
+          items={items.map((item) => item.id)}
+          strategy={verticalListSortingStrategy}
+        >
+          {items.length === 0 ? (
+            <div className="flex h-full items-center justify-center text-center text-sm text-muted-foreground">
+              Nothing here yet.
+            </div>
+          ) : (
+            <div className="space-y-2">
+              {items.map((item) => (
+                <MediaCard key={item.id} item={item} onDelete={onDelete} />
+              ))}
+            </div>
+          )}
+        </SortableContext>
       </div>
     </section>
   );
