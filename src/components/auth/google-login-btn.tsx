@@ -15,7 +15,7 @@ export function GoogleLoginBtn() {
     if (isLoading) return;
 
     setIsLoading(true);
-    await delay(1500); //! REMOVE LATER
+    await delay(1000); // KEEP THIS DELAY
 
     try {
       const supabase = createClient();
@@ -50,10 +50,10 @@ export function GoogleLoginBtn() {
   return (
     <Button
       size="lg"
-      variant="default"
+      variant="outline"
       disabled={isLoading}
       onClick={handleGoogleLogin}
-      className="w-50 space-x-1"
+      className="w-full h-12 space-x-1"
     >
       {isLoading ? (
         <Spinner />
