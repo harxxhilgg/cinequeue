@@ -53,7 +53,7 @@ export function GoogleLoginBtn() {
       variant="outline"
       disabled={isLoading}
       onClick={handleGoogleLogin}
-      className="w-full h-12 space-x-1"
+      className="w-full h-10 space-x-1"
     >
       {isLoading ? (
         <Spinner />

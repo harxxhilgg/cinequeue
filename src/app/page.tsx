@@ -3,7 +3,8 @@ import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { getDailyQuote } from "@/lib/dumb-apis/quote";
-import { MinusIcon } from "lucide-react";
+import { Film, MinusIcon } from "lucide-react";
+import { DemoLoginBtn } from "@/components/auth/demo-login-btn";
 
 export default async function Home() {
   // check if user is already logged in or not
@@ -22,33 +23,52 @@ export default async function Home() {
   return (
     <main className="flex min-h-screen bg-[#111111] text-white font-sans selection:bg-zinc-800">
       {/* Left side */}
-      <div className="flex flex-col w-full lg:w-[45%] xl:w-[40%] p-8 lg:p-12 relative border-r border-zinc-800/50 bg-[#1c1c1c]/20">
+      <div className="flex flex-col w-full lg:w-[45%] xl:w-[40%] p-8 lg:p-12 relative border-r border-zinc-800/50 bg-[#1c1c1c]/20 justify-between">
         {/* Logo */}
-        <div className="text-3xl font-semibold font-monst tracking-tight mb-auto flex items-center gap-2">
-          PlotQ
+        <div className="flex items-center gap-2">
+          <Film className="size-8 text-orange-500" />
+
+          <div className="text-3xl font-semibold font-monst tracking-tight flex items-center gap-2">
+            PlotQ
+          </div>
         </div>
 
         {/* Login Form Area */}
-        <div className="w-full max-w-sm mx-auto mt-20 mb-auto">
-          <h1 className="text-[28px] font-medium mb-2 text-zinc-100 tracking-tight">Welcome back</h1>
+        <div className="w-full max-w-sm mx-auto">
+          <h1 className="text-[28px] font-medium mb-2 text-zinc-100 tracking-tight">
+            Welcome back
+          </h1>
+
           <p className="text-sm text-zinc-400 mb-8">
             Sign in to your account
           </p>
 
           <div className="space-y-3">
-            <GoogleLoginBtn />
+            <div className="space-y-3">
+              <GoogleLoginBtn />
+            </div>
+
+            <div className="space-y-3">
+              <DemoLoginBtn />
+            </div>
           </div>
         </div>
 
         {/* Footer */}
-        <div className="mt-auto">
+        <div className="w-full">
           <p className="text-[13px] text-zinc-500 max-w-sm mx-auto text-center leading-relaxed">
             By continuing, you agree to PlotQ&apos;s{" "}
-            <Link href="/service" className="underline hover:text-zinc-300 transition-colors">
+            <Link
+              href="/service"
+              className="underline hover:text-zinc-300 transition-colors"
+            >
               Terms of Service
             </Link>{" "}
             and{" "}
-            <Link href="/privacy" className="underline hover:text-zinc-300 transition-colors">
+            <Link
+              href="/privacy"
+              className="underline hover:text-zinc-300 transition-colors"
+            >
               Privacy Policy
             </Link>
             , and to receive periodic emails with updates.
