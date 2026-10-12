@@ -20,7 +20,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { getTmdbImageUrl } from "@/lib/tmdb/image";
 import { Spinner } from "../ui/spinner";
-import { delay } from "@/lib/utils";
 
 type UserMediaItem = {
   id: number;
@@ -80,7 +79,6 @@ export function MediaCard({
     if (!onDelete || isDeleting) return;
 
     setIsDeleting(true);
-    await delay(1000); // KEEP THIS DELAY
 
     try {
       await onDelete(item.id); // returns boolean
@@ -185,12 +183,13 @@ export function MediaCard({
             </AlertDialogDescription>
           </AlertDialogHeader>
 
-          <AlertDialogFooter className="flex-row gap-3">
+          <AlertDialogFooter className="flex-row gap-3" autoFocus>
             <AlertDialogCancel disabled={isDeleting} className="flex-1 m-0">
               Cancel
             </AlertDialogCancel>
 
             <AlertDialogAction
+              autoFocus
               onClick={handleDelete}
               disabled={isDeleting}
               variant="destructive"

@@ -33,7 +33,7 @@ export function DemoLoginBtn() {
             </AlertDialogDescription>
           </AlertDialogHeader>
 
-          <AlertDialogFooter>
+          <AlertDialogFooter autoFocus>
             <GoogleLoginBtn />
           </AlertDialogFooter>
         </AlertDialogContent>

@@ -1,6 +1,5 @@
 "use client";
 
-import { delay } from "@/lib/utils";
 import { useAuthStore } from "@/stores/use-auth-store";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -30,7 +29,6 @@ export function LogoutBtn() {
     if (isLoading) return;
 
     setIsLoading(true);
-    await delay(1000); // KEEP THIS DELAY
 
     try {
       const supabase = createClient();
@@ -88,6 +86,7 @@ export function LogoutBtn() {
           </AlertDialogCancel>
 
           <AlertDialogAction
+            autoFocus
             onClick={handleLogout}
             disabled={isLoading}
             variant="destructive"

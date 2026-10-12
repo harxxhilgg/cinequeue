@@ -5,7 +5,6 @@ import { Button } from "../ui/button";
 import { GoogleLogoIcon } from "@phosphor-icons/react";
 import { useState } from "react";
 import { toast } from "../ui/toast";
-import { delay } from "@/lib/utils";
 import { Spinner } from "../ui/spinner";
 
 export function GoogleLoginBtn() {
@@ -15,7 +14,6 @@ export function GoogleLoginBtn() {
     if (isLoading) return;
 
     setIsLoading(true);
-    await delay(1000); // KEEP THIS DELAY
 
     try {
       const supabase = createClient();
