@@ -8,10 +8,7 @@ import Image from "next/image";
 import { Spinner } from "../ui/spinner";
 import { Button } from "../ui/button";
 import { Check, Plus } from "lucide-react";
-import {
-  addMediaToWatchlist,
-  getCurrentUserMediaIds,
-} from "@/actions/media";
+import { addMediaToWatchlist, getCurrentUserMediaIds } from "@/actions/media";
 import { toast } from "../ui/toast";
 import { useRouter } from "next/navigation";
 
@@ -26,8 +23,7 @@ export function MediaSearch() {
   // click outside the dropdown area should hide the dropdown
   const searchRef = useRef<HTMLDivElement>(null);
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [isDropdownVisible, setIsDropdownVisible] =
-    useState<boolean>(false);
+  const [isDropdownVisible, setIsDropdownVisible] = useState<boolean>(false);
 
   useEffect(() => {
     if (isOpen && (isLoading || results.length > 0 || error)) {
@@ -76,9 +72,7 @@ export function MediaSearch() {
     loadUserMedia();
   }, []);
 
-  async function handleAddToWatchlist(
-    result: (typeof results)[number]
-  ) {
+  async function handleAddToWatchlist(result: (typeof results)[number]) {
     try {
       setAddingId(result.id);
 
@@ -136,10 +130,7 @@ export function MediaSearch() {
         />
       )}
 
-      <div
-        ref={searchRef}
-        className="relative z-50 w-full max-w-3xl"
-      >
+      <div ref={searchRef} className="relative z-50 w-full max-w-3xl">
         <Input
           value={query}
           autoComplete="off"
@@ -152,11 +143,7 @@ export function MediaSearch() {
           className="relative z-50 h-auto rounded-none border-x-0 border-t-0 border-b-2 border-b-muted-foreground/50 bg-transparent! px-1 py-2 text-3xl! font-light shadow-none placeholder:text-muted-foreground focus-visible:border-b-orange-500 focus-visible:ring-0 focus-visible:ring-offset-0 font-monst"
         />
 
-        {error && (
-          <p className="mt-4 text-sm text-destructive">
-            {error}
-          </p>
-        )}
+        {error && <p className="mt-4 text-sm text-destructive">{error}</p>}
 
         {isDropdownVisible && (
           <div
@@ -166,9 +153,10 @@ export function MediaSearch() {
               bg-zinc-800
               shadow-lg
               transition-all duration-200 ease-out
-              ${isOpen
-                ? "translate-y-0 opacity-100"
-                : "-translate-y-1 opacity-0"
+              ${
+                isOpen
+                  ? "translate-y-0 opacity-100"
+                  : "-translate-y-1 opacity-0"
               }
             `}
           >
@@ -182,10 +170,7 @@ export function MediaSearch() {
               </div>
             ) : (
               results.map((result) => {
-                const posterUrl = getTmdbImageUrl(
-                  result.posterPath,
-                  "w92"
-                );
+                const posterUrl = getTmdbImageUrl(result.posterPath, "w92");
 
                 const isAdding = addingId === result.id;
 
@@ -210,14 +195,10 @@ export function MediaSearch() {
                     </div>
 
                     <div className="min-w-0 flex-1">
-                      <p className="truncate font-medium">
-                        {result.title}
-                      </p>
+                      <p className="truncate font-medium">{result.title}</p>
 
                       <p className="text-sm text-muted-foreground">
-                        {result.mediaType === "MOVIE"
-                          ? "Movie"
-                          : "TV Show"}
+                        {result.mediaType === "MOVIE" ? "Movie" : "TV Show"}
                       </p>
                     </div>
 
@@ -225,28 +206,17 @@ export function MediaSearch() {
                       type="button"
                       variant="ghost"
                       disabled={
-                        isAdding ||
-                        userMediaIds === null ||
-                        isAlreadyAdded
+                        isAdding || userMediaIds === null || isAlreadyAdded
                       }
                       onClick={() => handleAddToWatchlist(result)}
                       className="hover:bg-transparent! hover:text-orange-500"
                     >
                       {isAdding ? (
-                        <Spinner
-                          className="size-6"
-                          strokeWidth={1}
-                        />
+                        <Spinner className="size-6" strokeWidth={1} />
                       ) : isAlreadyAdded ? (
-                        <Check
-                          className="size-6"
-                          strokeWidth={1}
-                        />
+                        <Check className="size-6" strokeWidth={1} />
                       ) : (
-                        <Plus
-                          className="size-6"
-                          strokeWidth={1}
-                        />
+                        <Plus className="size-6" strokeWidth={1} />
                       )}
                     </Button>
                   </div>

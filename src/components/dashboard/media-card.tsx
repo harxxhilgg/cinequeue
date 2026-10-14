@@ -25,11 +25,7 @@ type UserMediaItem = {
   id: number;
   userId: string;
   mediaId: number;
-  status:
-  | "WATCHLIST"
-  | "WATCHING"
-  | "UPCOMING"
-  | "WATCHED";
+  status: "WATCHLIST" | "WATCHING" | "UPCOMING" | "WATCHED";
   position: number;
   media: {
     id: number;
@@ -50,25 +46,16 @@ export function MediaCard({
   isDragging = false,
   onDelete,
 }: MediaCardProps) {
-  const [isDeleteDialogOpen, setIsDeleteDialogOpen] =
-    useState(false);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
   const [isDeleting, setIsDeleting] = useState(false);
 
-  const {
-    attributes,
-    listeners,
-    setNodeRef,
-    transform,
-    transition,
-  } = useSortable({
-    id: item.id,
-  });
+  const { attributes, listeners, setNodeRef, transform, transition } =
+    useSortable({
+      id: item.id,
+    });
 
-  const posterUrl = getTmdbImageUrl(
-    item.media.posterUrl,
-    "w185",
-  );
+  const posterUrl = getTmdbImageUrl(item.media.posterUrl, "w185");
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -87,8 +74,8 @@ export function MediaCard({
     } finally {
       setIsDeleting(false);
       setIsDeleteDialogOpen(false);
-    };
-  };
+    }
+  }
 
   return (
     <>
@@ -105,7 +92,7 @@ export function MediaCard({
           transition-colors
           hover:bg-zinc-800/50
           active:cursor-grabbing
-          ${isDragging ? "border-orange-500/50 bg-zinc-800 opacity-80" : ""}
+          ${isDragging ? "border-orange-500/50 bg-zinc-900/70! backdrop-blur-xs" : ""}
         `}
       >
         {!isDragging && onDelete ? (
@@ -151,14 +138,10 @@ export function MediaCard({
         </div>
 
         <div className="min-w-0 pr-8">
-          <p className="truncate font-medium">
-            {item.media.title}
-          </p>
+          <p className="truncate font-medium">{item.media.title}</p>
 
           <p className="text-xs text-muted-foreground">
-            {item.media.mediaType === "MOVIE"
-              ? "Movie"
-              : "TV Show"}
+            {item.media.mediaType === "MOVIE" ? "Movie" : "TV Show"}
           </p>
         </div>
       </div>
@@ -174,9 +157,7 @@ export function MediaCard({
       >
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>
-              Remove {item.media.title}?
-            </AlertDialogTitle>
+            <AlertDialogTitle>Remove {item.media.title}?</AlertDialogTitle>
 
             <AlertDialogDescription>
               This will remove this item from your collection.
@@ -195,11 +176,7 @@ export function MediaCard({
               variant="destructive"
               className="flex-1 m-0"
             >
-              {isDeleting ? (
-                <Spinner />
-              ) : (
-                "Remove"
-              )}
+              {isDeleting ? <Spinner /> : "Remove"}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

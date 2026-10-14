@@ -23,11 +23,7 @@ const columns = [
   { status: "WATCHED" as const, title: "Watched" },
 ];
 
-type MediaStatus =
-  | "WATCHLIST"
-  | "WATCHING"
-  | "UPCOMING"
-  | "WATCHED";
+type MediaStatus = "WATCHLIST" | "WATCHING" | "UPCOMING" | "WATCHED";
 
 type UserMediaItem = {
   id: number;
@@ -89,8 +85,7 @@ export function MediaBoardClient({
   const dndContextId = useId();
 
   const [items, setItems] = useState(initialItems);
-  const [activeItem, setActiveItem] =
-    useState<UserMediaItem | null>(null);
+  const [activeItem, setActiveItem] = useState<UserMediaItem | null>(null);
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -100,9 +95,7 @@ export function MediaBoardClient({
   async function handleDeleteItem(id: number) {
     const previousItems = items;
 
-    const deletedItem = items.find(
-      (item) => item.id === id,
-    );
+    const deletedItem = items.find((item) => item.id === id);
 
     if (!deletedItem) {
       return false;
@@ -151,13 +144,11 @@ export function MediaBoardClient({
       });
 
       return false;
-    };
-  };
+    }
+  }
 
   function handleDragStart(event: DragStartEvent) {
-    const item = items.find(
-      (item) => item.id === Number(event.active.id),
-    );
+    const item = items.find((item) => item.id === Number(event.active.id));
 
     if (item) {
       setActiveItem(item);
@@ -174,9 +165,7 @@ export function MediaBoardClient({
     const activeId = Number(active.id);
     const overId = Number(over.id);
 
-    const currentActiveItem = items.find(
-      (item) => item.id === activeId,
-    );
+    const currentActiveItem = items.find((item) => item.id === activeId);
 
     if (!currentActiveItem) return;
 
@@ -193,9 +182,7 @@ export function MediaBoardClient({
 
       if (currentActiveItem.status !== targetStatus) {
         const sourceItems = items
-          .filter(
-            (item) => item.status === currentActiveItem.status,
-          )
+          .filter((item) => item.status === currentActiveItem.status)
           .sort((a, b) => a.position - b.position)
           .filter((item) => item.id !== activeId);
 
@@ -233,42 +220,27 @@ export function MediaBoardClient({
     // --------------------------------------------------
 
     if (!nextItems) {
-      const overItem = items.find(
-        (item) => item.id === overId,
-      );
+      const overItem = items.find((item) => item.id === overId);
 
       if (!overItem) return;
 
       // Same column → reorder.
       if (currentActiveItem.status === overItem.status) {
         const columnItems = items
-          .filter(
-            (item) => item.status === currentActiveItem.status,
-          )
+          .filter((item) => item.status === currentActiveItem.status)
           .sort((a, b) => a.position - b.position);
 
-        const oldIndex = columnItems.findIndex(
-          (item) => item.id === activeId,
-        );
+        const oldIndex = columnItems.findIndex((item) => item.id === activeId);
 
-        const newIndex = columnItems.findIndex(
-          (item) => item.id === overId,
-        );
+        const newIndex = columnItems.findIndex((item) => item.id === overId);
 
         if (oldIndex === -1 || newIndex === -1) return;
 
         if (oldIndex !== newIndex) {
-          const reorderedItems = arrayMove(
-            columnItems,
-            oldIndex,
-            newIndex,
-          );
+          const reorderedItems = arrayMove(columnItems, oldIndex, newIndex);
 
           const positionMap = new Map(
-            reorderedItems.map((item, index) => [
-              item.id,
-              index,
-            ]),
+            reorderedItems.map((item, index) => [item.id, index]),
           );
 
           nextItems = items.map((item) => {
@@ -300,9 +272,7 @@ export function MediaBoardClient({
           .filter((item) => item.status === targetStatus)
           .sort((a, b) => a.position - b.position);
 
-        const targetIndex = targetItems.findIndex(
-          (item) => item.id === overId,
-        );
+        const targetIndex = targetItems.findIndex((item) => item.id === overId);
 
         const movedItem = {
           ...currentActiveItem,
@@ -310,9 +280,7 @@ export function MediaBoardClient({
         };
 
         targetItems.splice(
-          targetIndex === -1
-            ? targetItems.length
-            : targetIndex,
+          targetIndex === -1 ? targetItems.length : targetIndex,
           0,
           movedItem,
         );
@@ -320,8 +288,7 @@ export function MediaBoardClient({
         nextItems = [
           ...items.filter(
             (item) =>
-              item.status !== sourceStatus &&
-              item.status !== targetStatus,
+              item.status !== sourceStatus && item.status !== targetStatus,
           ),
           ...sourceItems.map((item, index) => ({
             ...item,
@@ -378,9 +345,7 @@ export function MediaBoardClient({
 
     // Show the status-change toast immediately.
     if (movedToDifferentColumn) {
-      const nextItem = nextItems.find(
-        (item) => item.id === activeId,
-      );
+      const nextItem = nextItems.find((item) => item.id === activeId);
 
       if (nextItem) {
         toast.add({
@@ -403,8 +368,7 @@ export function MediaBoardClient({
 
       toast.add({
         title: "Couldn't save changes",
-        description:
-          "Your board was restored. Please try again.",
+        description: "Your board was restored. Please try again.",
         timeout: 3000,
       });
     }
@@ -440,10 +404,14 @@ export function MediaBoardClient({
         })}
       </div>
 
-      <DragOverlay>
-        {activeItem ? (
-          <MediaCard item={activeItem} isDragging />
-        ) : null}
+      <DragOverlay
+        style={{ opacity: 1 }}
+        dropAnimation={{
+          duration: 300,
+          easing: "ease-out",
+        }}
+      >
+        {activeItem ? <MediaCard item={activeItem} isDragging /> : null}
       </DragOverlay>
     </DndContext>
   );
