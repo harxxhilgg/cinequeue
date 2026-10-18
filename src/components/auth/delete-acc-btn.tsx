@@ -18,6 +18,7 @@ import { Button } from "../ui/button";
 import { DeleteIcon } from "lucide-react";
 import { Spinner } from "../ui/spinner";
 import { deleteAccount } from "@/actions/account";
+import { cn } from "cn";
 import { toast } from "../ui/toast";
 
 export interface DeleteAccBtnProps {
@@ -35,6 +36,7 @@ export function DeleteAccBtn({
   const clearUser = useAuthStore((state) => state.clearUser);
   const [isDeleting, setIsDeleting] = useState<boolean>(false);
   const [countdown, setCountdown] = useState<number>(10);
+  const [openCount, setOpenCount] = useState<number>(0);
 
   const isControlled = open !== undefined;
   const [uncontrolledOpen, setUncontrolledOpen] = useState<boolean>(false);
@@ -44,6 +46,9 @@ export function DeleteAccBtn({
   if (isOpen !== prevIsOpen) {
     setPrevIsOpen(isOpen);
     setCountdown(10);
+    if (isOpen) {
+      setOpenCount((c) => c + 1);
+    }
   }
 
   const handleOpenChange = (nextOpen: boolean) => {
@@ -150,15 +155,29 @@ export function DeleteAccBtn({
             onClick={handleDeleteAccount}
             disabled={isDeleting || countdown > 0}
             variant="destructive"
-            className="flex-1 m-0"
-          >
-            {isDeleting ? (
-              <Spinner />
-            ) : countdown > 0 ? (
-              `${countdown}`
-            ) : (
-              "Yes, Delete :("
+            className={cn(
+              "flex-1 m-0 relative overflow-hidden",
+              countdown > 0 &&
+                "bg-destructive/10 dark:bg-destructive/15 text-destructive disabled:opacity-100",
             )}
+          >
+            {countdown > 0 && (
+              <span
+                key={openCount}
+                aria-hidden="true"
+                className="absolute inset-y-0 left-0 bg-destructive/30 dark:bg-destructive/40 pointer-events-none rounded-lg animate-countdown-drain"
+              />
+            )}
+
+            <span className="relative z-10 flex items-center justify-center">
+              {isDeleting ? (
+                <Spinner />
+              ) : countdown > 0 ? (
+                `${countdown}`
+              ) : (
+                "Yes, Delete :("
+              )}
+            </span>
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

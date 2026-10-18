@@ -134,3 +134,16 @@
     background-color: #ff690030;
   }
 }
+
+@keyframes countdown-drain {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0%;
+  }
+}
+
+.animate-countdown-drain {
+  animation: countdown-drain 10s linear forwards;
+}
