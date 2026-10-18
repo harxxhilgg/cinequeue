@@ -88,7 +88,7 @@ export default async function Home() {
             </svg>
           </div>
 
-          <p className="text-2xl font-medium text-zinc-300 leading-snug mb-8 tracking-tight relative z-10">
+          <p className="text-2xl font-medium text-zinc-200 leading-snug mb-8 tracking-tight relative z-10">
             {quote.quote}
           </p>
 

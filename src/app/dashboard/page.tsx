@@ -5,6 +5,7 @@ import { Film } from "lucide-react";
 export default function DashboardPage() {
   return (
     <main className="flex h-screen min-h-0 flex-col px-6 pb-6">
+      {/* Top-Left Logo */}
       <div className="flex items-center gap-2 absolute left-6 top-6 z-50">
         <Film className="size-7 text-orange-500" />
 

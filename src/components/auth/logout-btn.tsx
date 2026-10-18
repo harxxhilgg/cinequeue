@@ -20,7 +20,17 @@ import { Button } from "../ui/button";
 import { Spinner } from "../ui/spinner";
 import { LogOutIcon } from "lucide-react";
 
-export function LogoutBtn() {
+export interface LogoutBtnProps {
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  trigger?: React.ReactElement | null;
+}
+
+export function LogoutBtn({
+  open,
+  onOpenChange,
+  trigger,
+}: LogoutBtnProps = {}) {
   const router = useRouter();
   const clearUser = useAuthStore((state) => state.clearUser);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -64,17 +74,26 @@ export function LogoutBtn() {
   };
 
   return (
-    <AlertDialog>
-      <AlertDialogTrigger
-        render={<Button variant="destructive" size="lg" className="h-10.25" />}
-      >
-        <LogOutIcon className="size-4" />
-        Logout
-      </AlertDialogTrigger>
+    <AlertDialog open={open} onOpenChange={onOpenChange}>
+      {trigger !== undefined ? (
+        trigger ? (
+          <AlertDialogTrigger render={trigger} />
+        ) : null
+      ) : (
+        <AlertDialogTrigger
+          render={
+            <Button variant="destructive" size="lg" className="h-10.25" />
+          }
+        >
+          <LogOutIcon className="size-4" />
+          Logout
+        </AlertDialogTrigger>
+      )}
 
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Logout?</AlertDialogTitle>
+
           <AlertDialogDescription>
             Are you sure you want to logout?
           </AlertDialogDescription>

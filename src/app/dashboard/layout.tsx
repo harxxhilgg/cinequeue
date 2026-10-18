@@ -2,8 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { AuthStoreHydrator } from "../auth/auth-store-hydrator";
-import { LogoutBtn } from "@/components/auth/logout-btn";
-import { UserInfo } from "@/components/auth/user-info";
+import { AuthDropdown } from "@/components/auth/auth-dropdown";
 
 export const metadata: Metadata = {
   title: "Dashboard - PlotQ",
@@ -34,12 +33,11 @@ export default async function DashboardLayout({
 
   return (
     <>
+      {/* Stores the user data into zustand store */}
       <AuthStoreHydrator user={appUser} />
 
-      <div className="absolute right-6 top-6 z-50 flex gap-2">
-        <UserInfo />
-
-        <LogoutBtn />
+      <div className="absolute right-6 top-6 z-50 flex gap-2 items-center">
+        <AuthDropdown />
       </div>
 
       {children}
