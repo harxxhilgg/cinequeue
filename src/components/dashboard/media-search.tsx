@@ -153,9 +153,10 @@ export function MediaSearch() {
               bg-zinc-100 dark:bg-zinc-800
               shadow-lg
               transition-all duration-200 ease-out
-              ${isOpen
-                ? "translate-y-0 opacity-100"
-                : "-translate-y-1 opacity-0"
+              ${
+                isOpen
+                  ? "translate-y-0 opacity-100"
+                  : "-translate-y-1 opacity-0"
               }
             `}
           >

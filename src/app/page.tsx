@@ -39,7 +39,9 @@ export default async function Home() {
             Welcome back
           </h1>
 
-          <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-8">Sign in to your account</p>
+          <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-8">
+            Sign in to your account
+          </p>
 
           <div className="space-y-3">
             <div className="space-y-3">
