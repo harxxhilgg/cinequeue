@@ -21,7 +21,7 @@ export default async function Home() {
   const quote = await getDailyQuote();
 
   return (
-    <main className="flex min-h-screen bg-[#111111] text-white font-sans selection:bg-zinc-800">
+    <main className="flex min-h-screen bg-[#FFFFFF] dark:bg-[#111111] font-sans">
       {/* Left side */}
       <div className="flex flex-col w-full lg:w-[45%] xl:w-[40%] p-8 lg:p-12 relative border-r border-zinc-800/50 bg-[#1c1c1c]/20 justify-between">
         {/* Logo */}
@@ -35,11 +35,11 @@ export default async function Home() {
 
         {/* Login Form Area */}
         <div className="w-full max-w-sm mx-auto">
-          <h1 className="text-[28px] font-medium mb-2 text-zinc-100 tracking-tight">
+          <h1 className="text-[28px] font-medium mb-2 text-zinc-900 dark:text-zinc-100 tracking-tight">
             Welcome back
           </h1>
 
-          <p className="text-sm text-zinc-400 mb-8">Sign in to your account</p>
+          <p className="text-sm text-zinc-600 dark:text-zinc-400 mb-8">Sign in to your account</p>
 
           <div className="space-y-3">
             <div className="space-y-3">
@@ -58,14 +58,14 @@ export default async function Home() {
             By continuing, you agree to PlotQ&apos;s{" "}
             <Link
               href="/service"
-              className="underline hover:text-zinc-300 transition-colors"
+              className="underline hover:text-zinc-700 dark:hover:text-zinc-300 transition-colors"
             >
               Terms of Service
             </Link>{" "}
             and{" "}
             <Link
               href="/privacy"
-              className="underline hover:text-zinc-300 transition-colors"
+              className="underline hover:text-zinc-700 dark:hover:text-zinc-300 transition-colors"
             >
               Privacy Policy
             </Link>

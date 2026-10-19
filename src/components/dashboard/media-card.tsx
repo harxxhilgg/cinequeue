@@ -1,12 +1,10 @@
 "use client";
 
 import { useState } from "react";
-
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { X } from "lucide-react";
 import Image from "next/image";
-
 import {
   AlertDialog,
   AlertDialogAction,
@@ -89,10 +87,10 @@ export function MediaCard({
           relative
           flex cursor-grab items-center gap-3
           rounded-lg border p-2
-          transition-colors
-          hover:bg-zinc-800/50
+          transition-all duration-300
+          hover:bg-zinc-200/50 dark:hover:bg-zinc-800/50
           active:cursor-grabbing
-          ${isDragging ? "border-orange-500/50 bg-zinc-900/70! backdrop-blur-xs" : ""}
+          ${isDragging ? "border-orange-500/50 bg-zinc-200/70! dark:bg-zinc-900/70! backdrop-blur-xs" : ""}
         `}
       >
         {!isDragging && onDelete ? (

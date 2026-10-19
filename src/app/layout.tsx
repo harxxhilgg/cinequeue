@@ -3,6 +3,7 @@ import "./globals.css";
 import { geistMono, geistSans, montserrat } from "@/lib/fonts";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "@/components/ui/toast";
+import { ThemeProvider } from "next-themes";
 
 export const metadata: Metadata = {
   title: "PlotQ",
@@ -15,10 +16,15 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} ${montserrat.variable} dark h-full antialiased`}
+      suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">
-        <TooltipProvider>{children}</TooltipProvider>
-        <Toaster position="bottom-right" />
+        <ThemeProvider attribute="class" enableSystem>
+          <TooltipProvider>
+            {children}
+            <Toaster position="bottom-right" />
+          </TooltipProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

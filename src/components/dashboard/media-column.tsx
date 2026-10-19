@@ -37,7 +37,7 @@ export function MediaColumn({ id, title, items, onDelete }: MediaColumnProps) {
     <section
       className={`
         flex h-full min-h-0 flex-col overflow-hidden rounded-xl
-        border-2 bg-zinc-900
+        border-2 bg-zinc-100 dark:bg-zinc-900
         transition-colors duration-200
         ${isOver ? "border-orange-500/50 border-dashed border-2" : ""}
       `}

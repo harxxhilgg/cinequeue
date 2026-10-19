@@ -22,7 +22,7 @@ export function DemoLoginBtn() {
         size="lg"
         variant="default"
         onClick={() => setIsOpen(true)}
-        className="w-full h-10 space-x-1 bg-orange-600 hover:bg-orange-700 text-white"
+        className="w-full h-10 space-x-1 bg-orange-600 hover:bg-orange-700/90 dark:hover:bg-orange-700 text-white"
       >
         <ConeIcon />
         <p>Try Demo</p>

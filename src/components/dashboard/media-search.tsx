@@ -123,7 +123,7 @@ export function MediaSearch() {
       {isDropdownVisible && (
         <div
           className={`
-            fixed inset-0 z-40 bg-black/40 backdrop-blur-xs
+            fixed inset-0 z-40 backdrop-blur-sm
             transition-all duration-300 ease-out
             ${isOpen ? "opacity-100" : "pointer-events-none opacity-0"}
           `}
@@ -150,13 +150,12 @@ export function MediaSearch() {
             className={`
               absolute left-0 top-full z-50 mt-2 w-full
               overflow-hidden rounded-lg border
-              bg-zinc-800
+              bg-zinc-100 dark:bg-zinc-800
               shadow-lg
               transition-all duration-200 ease-out
-              ${
-                isOpen
-                  ? "translate-y-0 opacity-100"
-                  : "-translate-y-1 opacity-0"
+              ${isOpen
+                ? "translate-y-0 opacity-100"
+                : "-translate-y-1 opacity-0"
               }
             `}
           >
@@ -180,7 +179,7 @@ export function MediaSearch() {
                 return (
                   <div
                     key={`${result.mediaType}-${result.id}`}
-                    className="flex items-center gap-3 border-b p-3 last:border-b-0 hover:bg-zinc-900/20"
+                    className="flex items-center gap-3 border-b p-3 last:border-b-0 hover:bg-zinc-200/40 dark:hover:bg-zinc-900/20"
                   >
                     <div className="size-12 shrink-0 overflow-hidden rounded bg-muted">
                       {posterUrl && (

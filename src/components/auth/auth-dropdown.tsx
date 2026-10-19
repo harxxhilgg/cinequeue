@@ -10,14 +10,22 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
   DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { LogoutBtn } from "./logout-btn";
 import { LogOutIcon, TrashIcon } from "lucide-react";
 import { DeleteAccBtn } from "./delete-acc-btn";
+import { useTheme } from "next-themes";
 
 export function AuthDropdown() {
+  const { theme, setTheme } = useTheme();
+
   const user = useAuthStore((state) => state.user);
   const [isLogoutDialogOpen, setIsLogoutDialogOpen] = useState<boolean>(false);
   const [isDeleteAccountDialogOpen, setIsDeleteAccountDialogOpen] =
@@ -30,13 +38,13 @@ export function AuthDropdown() {
           render={
             <Button
               variant="outline"
-              className="flex gap-2 h-10 rounded-lg select-none"
+              className="flex gap-2 h-11 w-25 rounded-lg select-none"
             >
               <Image
                 src={user?.avatarUrl || "/default_user.png"}
                 alt="User Image"
-                height={25}
-                width={25}
+                height={26}
+                width={26}
                 className="rounded-full"
               />
 
@@ -47,23 +55,32 @@ export function AuthDropdown() {
 
         <DropdownMenuContent className="w-44" align="end">
           <DropdownMenuGroup>
-            <DropdownMenuLabel>Label One</DropdownMenuLabel>
+            <DropdownMenuLabel>Appearance</DropdownMenuLabel>
 
-            <DropdownMenuItem
-              className="h-8"
-              variant="default"
-              onClick={() => console.log("Clicked Item One")}
-            >
-              Item One
-            </DropdownMenuItem>
+            <DropdownMenuSub>
+              <DropdownMenuSubTrigger>Theme</DropdownMenuSubTrigger>
 
-            <DropdownMenuItem
-              className="h-8"
-              variant="default"
-              onClick={() => console.log("Clicked Item Two")}
-            >
-              Item Two
-            </DropdownMenuItem>
+              <DropdownMenuSubContent>
+                <DropdownMenuRadioGroup
+                  value={theme ?? "system"}
+                  onValueChange={(value) => {
+                    setTheme(value as "system" | "light" | "dark");
+                  }}
+                >
+                  <DropdownMenuRadioItem value="system">
+                    System
+                  </DropdownMenuRadioItem>
+
+                  <DropdownMenuRadioItem value="light">
+                    Light
+                  </DropdownMenuRadioItem>
+
+                  <DropdownMenuRadioItem value="dark">
+                    Dark
+                  </DropdownMenuRadioItem>
+                </DropdownMenuRadioGroup>
+              </DropdownMenuSubContent>
+            </DropdownMenuSub>
           </DropdownMenuGroup>
 
           <DropdownMenuSeparator />
