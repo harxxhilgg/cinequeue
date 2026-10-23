@@ -12,6 +12,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "../ui/alert-dialog";
+import { GitHubLoginBtn } from "./github-login-btn";
 
 export function DemoLoginBtn() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -41,8 +42,9 @@ export function DemoLoginBtn() {
             </AlertDialogDescription>
           </AlertDialogHeader>
 
-          <AlertDialogFooter autoFocus>
+          <AlertDialogFooter className="flex-col gap-2 sm:flex-col">
             <GoogleLoginBtn />
+            <GitHubLoginBtn />
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

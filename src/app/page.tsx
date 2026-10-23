@@ -5,6 +5,9 @@ import Link from "next/link";
 import { getDailyQuote } from "@/lib/dumb-apis/quote";
 import { Film, MinusIcon } from "lucide-react";
 import { DemoLoginBtn } from "@/components/auth/demo-login-btn";
+import { GitHubLoginBtn } from "@/components/auth/github-login-btn";
+import { DiscordLoginBtn } from "@/components/auth/discord-login-btn";
+import { AuthErrorDialog } from "@/components/auth/auth-error-dialog";
 
 export default async function Home() {
   // check if user is already logged in or not
@@ -18,10 +21,13 @@ export default async function Home() {
     redirect("/dashboard");
   }
 
+  // get quote 
   const quote = await getDailyQuote();
 
   return (
     <main className="flex min-h-screen bg-[#FFFFFF] dark:bg-[#111111] font-sans">
+      <AuthErrorDialog />
+
       {/* Left side */}
       <div className="flex flex-col w-full lg:w-[45%] xl:w-[40%] p-8 lg:p-12 relative border-r border-zinc-800/50 bg-[#1c1c1c]/20 justify-between">
         {/* Logo */}
@@ -46,6 +52,14 @@ export default async function Home() {
           <div className="space-y-3">
             <div className="space-y-3">
               <GoogleLoginBtn />
+            </div>
+
+            <div className="space-y-3">
+              <GitHubLoginBtn />
+            </div>
+
+            <div className="space-y-3">
+              <DiscordLoginBtn />
             </div>
 
             <div className="space-y-3">

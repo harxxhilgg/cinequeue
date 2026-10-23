@@ -38,7 +38,7 @@ export function AuthDropdown() {
           render={
             <Button
               variant="outline"
-              className="flex gap-2 h-11 w-25 rounded-lg select-none"
+              className="flex gap-2 h-12 px-3 rounded-lg select-none"
             >
               <Image
                 src={user?.avatarUrl || "/default_user.png"}
@@ -48,7 +48,7 @@ export function AuthDropdown() {
                 className="rounded-full"
               />
 
-              <p>{user?.name}</p>
+              <p className="text-[16px]">{user?.name}</p>
             </Button>
           }
         />

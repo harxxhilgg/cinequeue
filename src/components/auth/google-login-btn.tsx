@@ -48,7 +48,7 @@ export function GoogleLoginBtn() {
   return (
     <Button
       size="lg"
-      variant="outline"
+      variant="default"
       disabled={isLoading}
       onClick={handleGoogleLogin}
       className="w-full h-10 space-x-1"
