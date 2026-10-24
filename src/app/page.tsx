@@ -21,7 +21,7 @@ export default async function Home() {
     redirect("/dashboard");
   }
 
-  // get quote 
+  // get quote
   const quote = await getDailyQuote();
 
   return (
